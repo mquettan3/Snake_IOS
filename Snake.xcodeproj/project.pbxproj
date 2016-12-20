@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23B9C4CC1E08C5B8008000C5 /* Snake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9C4CB1E08C5B8008000C5 /* Snake.swift */; };
 		23FD38241E060A4F00FC6FEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD38231E060A4F00FC6FEF /* AppDelegate.swift */; };
 		23FD38261E060A4F00FC6FEF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23FD38251E060A4F00FC6FEF /* GameScene.sks */; };
 		23FD38281E060A4F00FC6FEF /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23FD38271E060A4F00FC6FEF /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23B9C4CB1E08C5B8008000C5 /* Snake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snake.swift; sourceTree = "<group>"; };
 		23FD38201E060A4F00FC6FEF /* Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD38231E060A4F00FC6FEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23FD38251E060A4F00FC6FEF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				23FD38301E060A4F00FC6FEF /* Assets.xcassets */,
 				23FD38321E060A4F00FC6FEF /* LaunchScreen.storyboard */,
 				23FD38351E060A4F00FC6FEF /* Info.plist */,
+				23B9C4CB1E08C5B8008000C5 /* Snake.swift */,
 			);
 			path = Snake;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23B9C4CC1E08C5B8008000C5 /* Snake.swift in Sources */,
 				23FD382A1E060A4F00FC6FEF /* GameScene.swift in Sources */,
 				23FD382C1E060A4F00FC6FEF /* GameViewController.swift in Sources */,
 				23FD38241E060A4F00FC6FEF /* AppDelegate.swift in Sources */,
@@ -517,6 +521,7 @@
 				23FD38501E060A4F00FC6FEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		23FD38511E060A4F00FC6FEF /* Build configuration list for PBXNativeTarget "SnakeTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +530,7 @@
 				23FD38531E060A4F00FC6FEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		23FD38541E060A4F00FC6FEF /* Build configuration list for PBXNativeTarget "SnakeUITests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +539,7 @@
 				23FD38561E060A4F00FC6FEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
