@@ -11,8 +11,6 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-    
-    var snake = Snake();
 
     override func viewDidLoad() {
         super.viewDidLoad()
