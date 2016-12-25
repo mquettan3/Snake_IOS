@@ -93,8 +93,11 @@ class SnakeLogic {
     }
     
     func generateFood() {
-        self.foodLocation.x = CGFloat(UInt32(self.snakeSize.width) * arc4random_uniform(6))
-        self.foodLocation.y = CGFloat(UInt32(self.snakeSize.height) * arc4random_uniform(6))
+        let cols = UInt32(floor(self.worldSize.width / self.snakeSize.width))
+        let rows = UInt32(floor(self.worldSize.height / self.snakeSize.height))
+        
+        self.foodLocation.x = CGFloat(UInt32(self.snakeSize.width) * arc4random_uniform(cols)) - (CGFloat(cols / 2) * self.snakeSize.width)
+        self.foodLocation.y = CGFloat(UInt32(self.snakeSize.height) * arc4random_uniform(rows)) - (CGFloat(rows / 2) * self.snakeSize.height)
     }
     
 }
