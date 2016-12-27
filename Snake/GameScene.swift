@@ -53,7 +53,7 @@ class GameScene: SKScene {
         
         //Start Game Loop Timer
         //self.timer = timer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "timerMethod:", userInfo: nil, repeats: true)
-        self.timer = Timer.scheduledTimer(timeInterval: Difficulty.Easy.rawValue, target: self, selector: #selector(self.timerMethod), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: Difficulty.Medium.rawValue, target: self, selector: #selector(self.timerMethod), userInfo: nil, repeats: true)
     }
     
     @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -61,13 +61,21 @@ class GameScene: SKScene {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                snakeLogic!.currentDirection = .Right
+                if(snakeLogic!.currentDirection != .Left) {
+                    snakeLogic!.currentDirection = .Right
+                }
             case UISwipeGestureRecognizerDirection.down:
-                snakeLogic!.currentDirection = .Down
+                if(snakeLogic!.currentDirection != .Up) {
+                    snakeLogic!.currentDirection = .Down
+                }
             case UISwipeGestureRecognizerDirection.left:
-                snakeLogic!.currentDirection = .Left
+                if(snakeLogic!.currentDirection != .Right) {
+                    snakeLogic!.currentDirection = .Left
+                }
             case UISwipeGestureRecognizerDirection.up:
-                snakeLogic!.currentDirection = .Up
+                if(snakeLogic!.currentDirection != .Down) {
+                    snakeLogic!.currentDirection = .Up
+                }
             default:
                 break
             }
@@ -82,8 +90,6 @@ class GameScene: SKScene {
         if(snakeLogic!.didEatFood) {
             snakeLogic!.generateFood()
             food.position = snakeLogic!.foodLocation
-            //food.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            print("Created food at \(food.position)")
             snakeSegments.append(SKShapeNode(rectOf: snakeSize))
             snakeLogic!.didEatFood = false
         }
@@ -95,6 +101,10 @@ class GameScene: SKScene {
             i += 1
             segment.removeFromParent()
             self.addChild(segment)
+        }
+        
+        if(snakeLogic!.didGameEnd()) {
+            print("Game Over!")
         }
     }
     
