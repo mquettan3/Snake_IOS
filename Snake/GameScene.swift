@@ -12,11 +12,16 @@ import GameplayKit
 class GameScene: SKScene {
     
     //High scope variables
-    private var label : SKLabelNode?
     private var snakeLogic: SnakeLogic?
     private var snakeSegments: [SKShapeNode] = []
     private var timer : Timer!
     private var runCount : Int = 0
+    private var scoreLabel: SKLabelNode!
+    private var score : Int = 0 {
+        didSet {
+            self.scoreLabel.text = "Score: \(score)"
+        }
+    }
     
     //Configuration Parameters
     private var snakeScale = 30
@@ -34,6 +39,7 @@ class GameScene: SKScene {
         }
         
         //Create initial food
+        snakeLogic!.generateFood()
         self.food.position = snakeLogic!.foodLocation
         self.food.size = snakeLogic!.snakeSize
         self.addChild(food)
@@ -55,6 +61,9 @@ class GameScene: SKScene {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view!.addGestureRecognizer(swipeRight)
+        
+        //Populate Score Label
+        scoreLabel = self.childNode(withName: "CurrentScoreLabel") as! SKLabelNode
         
         //Start Game Loop Timer
         //self.timer = timer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "timerMethod:", userInfo: nil, repeats: true)
@@ -97,6 +106,7 @@ class GameScene: SKScene {
             food.position = snakeLogic!.foodLocation
             snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
             snakeLogic!.didEatFood = false
+            score = snakeLogic!.updateScore()
         }
         
         //Update the snake drawing for each point in snake

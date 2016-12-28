@@ -29,6 +29,7 @@ class SnakeLogic {
     var didEatFood: Bool
     var foodLocation: CGPoint
     private var worldSize: CGSize
+    private var currentScore: Int
     
     init(worldSize: CGSize, snakeSize: CGSize, initialLength: Int) {
         self.worldSize = worldSize
@@ -37,6 +38,7 @@ class SnakeLogic {
         self.didEatFood = false
         self.points = []
         self.currentDirection = .Up
+        self.currentScore = 0
         
         for index in 0..<initialLength {
             self.points.append(CGPoint(x: snakeSize.width * CGFloat(index), y: 0))
@@ -125,6 +127,11 @@ class SnakeLogic {
             count += 1
         }
         return false
+    }
+    
+    func updateScore() -> Int {
+        self.currentScore += 30
+        return self.currentScore
     }
     
 }
