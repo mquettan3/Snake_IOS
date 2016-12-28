@@ -110,7 +110,9 @@ class GameScene: SKScene {
         
         if(snakeLogic!.didGameEnd()) {
             let gameOverTransition = SKTransition.fade(withDuration: 2)
-            self.view?.presentScene(SKScene(fileNamed: "GameOverScene")!, transition: gameOverTransition);
+            let gameOverScene = SKScene(fileNamed: "GameOverScene")!
+            gameOverScene.scaleMode = .fill
+            self.view?.presentScene(gameOverScene, transition: gameOverTransition);
             timer.invalidate()
         }
     }

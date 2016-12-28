@@ -18,13 +18,17 @@ class MainMenuScene: SKScene {
                 //If Start Button is Pressed
                 if (node.name == "StartButton") {
                     let startGameTransition = SKTransition.fade(withDuration: 0.5)
-                    self.view?.presentScene(SKScene(fileNamed: "GameScene")!, transition: startGameTransition);
+                    let gameScene = SKScene(fileNamed: "GameScene")!
+                    gameScene.scaleMode = .fill
+                    self.view?.presentScene(gameScene, transition: startGameTransition);
                 }
                 
                 //If Leaderboards Button is Pressed
                 if (node.name == "LeaderboardButton") {
                     let startGameTransition = SKTransition.fade(withDuration: 0.5)
-                    self.view?.presentScene(SKScene(fileNamed: "GameScene")!, transition: startGameTransition);
+                    let gameScene = SKScene(fileNamed: "GameScene")!
+                    gameScene.scaleMode = .fill
+                    self.view?.presentScene(gameScene, transition: startGameTransition);
                 }
                 
             }
