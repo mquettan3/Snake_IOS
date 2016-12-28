@@ -11,26 +11,32 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    //High scope variables
     private var label : SKLabelNode?
     private var snakeLogic: SnakeLogic?
-    private var snakeSegments: [SKShapeNode] = [SKShapeNode()]
-    private var snakeSize: CGSize!
-    private var food = SKSpriteNode(imageNamed: "apple")
+    private var snakeSegments: [SKShapeNode] = []
     private var timer : Timer!
+    private var runCount : Int = 0
+    
+    //Configuration Parameters
     private var snakeScale = 30
+    private var snakeInitialLength = 10
+    private var food = SKSpriteNode(imageNamed: "apple")
     
     override func didMove(to view: SKView) {
         //Init Snake Logic Class
-        snakeLogic = SnakeLogic(worldSize: self.frame.size, snakeSize: CGSize(width: snakeScale, height: snakeScale))
+        snakeLogic = SnakeLogic(worldSize: self.frame.size, snakeSize: CGSize(width: snakeScale, height: snakeScale), initialLength: snakeInitialLength)
         
         //Create the Snake's Head
-        snakeSize = CGSize(width: snakeLogic!.snakeSize.width, height: snakeLogic!.snakeSize.height)
-        snakeSegments[0] = SKShapeNode(rectOf: snakeSize)
-        self.addChild(snakeSegments[0])
+        for index in 0..<snakeLogic!.points.count {
+            print("Points Count = \(snakeLogic!.points.count)")
+            snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
+            self.addChild(snakeSegments[index])
+        }
         
         //Create initial food
         self.food.position = snakeLogic!.foodLocation
-        self.food.size = snakeSize
+        self.food.size = snakeLogic!.snakeSize
         self.addChild(food)
         
         //Start the four gesture recognizers for each swipe direction
@@ -90,7 +96,7 @@ class GameScene: SKScene {
         if(snakeLogic!.didEatFood) {
             snakeLogic!.generateFood()
             food.position = snakeLogic!.foodLocation
-            snakeSegments.append(SKShapeNode(rectOf: snakeSize))
+            snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
             snakeLogic!.didEatFood = false
         }
         
@@ -104,7 +110,9 @@ class GameScene: SKScene {
         }
         
         if(snakeLogic!.didGameEnd()) {
-            print("Game Over!")
+            let gameOverTransition = SKTransition.fade(withDuration: 2)
+            self.view?.presentScene(SKScene(fileNamed: "GameOverScene")!, transition: gameOverTransition);
+            timer.invalidate()
         }
     }
     

@@ -30,13 +30,17 @@ class SnakeLogic {
     var foodLocation: CGPoint
     private var worldSize: CGSize
     
-    init(worldSize: CGSize, snakeSize: CGSize) {
+    init(worldSize: CGSize, snakeSize: CGSize, initialLength: Int) {
         self.worldSize = worldSize
         self.snakeSize = snakeSize
         self.foodLocation = CGPoint(x: 0, y: 0)
         self.didEatFood = false
-        self.points = [CGPoint(x: 0, y: 0)]
+        self.points = []
         self.currentDirection = .Up
+        
+        for index in 0..<initialLength {
+            self.points.append(CGPoint(x: snakeSize.width * CGFloat(index), y: 0))
+        }
     }
     
     func move(_ direction: Direction) {
