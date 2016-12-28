@@ -86,6 +86,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23BA1D451E1340FC00884F37 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				23FD38231E060A4F00FC6FEF /* AppDelegate.swift */,
+				23FD382D1E060A4F00FC6FEF /* Main.storyboard */,
+				23FD38321E060A4F00FC6FEF /* LaunchScreen.storyboard */,
+				23FD38351E060A4F00FC6FEF /* Info.plist */,
+				23FD38301E060A4F00FC6FEF /* Assets.xcassets */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
 		23FD38171E060A4F00FC6FEF = {
 			isa = PBXGroup;
 			children = (
@@ -109,16 +121,12 @@
 		23FD38221E060A4F00FC6FEF /* Snake */ = {
 			isa = PBXGroup;
 			children = (
-				23FD38231E060A4F00FC6FEF /* AppDelegate.swift */,
 				23FD38251E060A4F00FC6FEF /* GameScene.sks */,
 				23FD38271E060A4F00FC6FEF /* Actions.sks */,
 				23FD38291E060A4F00FC6FEF /* GameScene.swift */,
 				23BA1D431E13266500884F37 /* GameOverScene.swift */,
 				23FD382B1E060A4F00FC6FEF /* GameViewController.swift */,
-				23FD382D1E060A4F00FC6FEF /* Main.storyboard */,
-				23FD38301E060A4F00FC6FEF /* Assets.xcassets */,
-				23FD38321E060A4F00FC6FEF /* LaunchScreen.storyboard */,
-				23FD38351E060A4F00FC6FEF /* Info.plist */,
+				23BA1D451E1340FC00884F37 /* Support Files */,
 				23B9C4CB1E08C5B8008000C5 /* SnakeLogic.swift */,
 				23BA1D411E131C2900884F37 /* GameOverScene.sks */,
 			);

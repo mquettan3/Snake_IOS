@@ -29,7 +29,6 @@ class GameScene: SKScene {
         
         //Create the Snake's Head
         for index in 0..<snakeLogic!.points.count {
-            print("Points Count = \(snakeLogic!.points.count)")
             snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
             self.addChild(snakeSegments[index])
         }

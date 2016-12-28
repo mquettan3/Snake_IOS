@@ -80,7 +80,6 @@ class SnakeLogic {
         let rows = UInt32(floor(self.worldSize.height / self.snakeSize.height))
         let maxWidth = CGFloat(cols) * self.snakeSize.width
         let maxHeight = CGFloat(rows) * self.snakeSize.height
-        print("Max Height = \(maxHeight) - Frame HEight = \(self.worldSize.height)")
         
         //If we've hit the edge of the world, loop to the other side!
         if(((abs(self.points[0].x) + (self.snakeSize.width / 2)) * 2) > maxWidth) {
