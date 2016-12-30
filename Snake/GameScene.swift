@@ -9,6 +9,8 @@
 import SpriteKit
 import GameplayKit
 
+var currentDifficulty = Difficulty.Easy
+
 class GameScene: SKScene {
     
     //High scope variables
@@ -67,7 +69,7 @@ class GameScene: SKScene {
         
         //Start Game Loop Timer
         //self.timer = timer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "timerMethod:", userInfo: nil, repeats: true)
-        self.timer = Timer.scheduledTimer(timeInterval: Difficulty.Medium.rawValue, target: self, selector: #selector(self.timerMethod), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: currentDifficulty.rawValue, target: self, selector: #selector(self.timerMethod), userInfo: nil, repeats: true)
     }
     
     @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {

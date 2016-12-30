@@ -21,6 +21,27 @@ class MainMenuScene: SKScene {
                     gameScene.scaleMode = .fill
                     self.view?.presentScene(gameScene, transition: startGameTransition);
                 }
+                
+                //If Difficulty Button is Pressed
+                if (node.name == "DifficultyButton") {
+                    let difficultyLabel = self.childNode(withName: "DifficultyLabel") as! SKLabelNode
+                    switch(difficultyLabel.text!) {
+                    case "Difficulty: Easy":
+                        //Set difficulty to Medium
+                        difficultyLabel.text = "Difficulty: Medium"
+                        currentDifficulty = Difficulty.Medium
+                    case "Difficulty: Medium":
+                        //Set difficulty to Hard
+                        difficultyLabel.text = "Difficulty: Hard"
+                        currentDifficulty = Difficulty.Hard
+                    case "Difficulty: Hard":
+                        //Set difficulty to Easy
+                        difficultyLabel.text = "Difficulty: Easy"
+                        currentDifficulty = Difficulty.Easy
+                    default:
+                        print("Undefined Difficulty - This should never happen")
+                    }
+                }
             }
         }
     }
