@@ -119,10 +119,19 @@ class GameScene: SKScene {
         }
         
         if(snakeLogic!.didGameEnd()) {
+            //Save High Score
+            let userDefaults = UserDefaults.standard
+            if(snakeLogic!.currentScore > userDefaults.integer(forKey: "HighScore")) {
+                userDefaults.set(snakeLogic!.currentScore, forKey: "HighScore")
+            }
+            
+            //Present the Game Over Scene
             let gameOverTransition = SKTransition.fade(withDuration: 2)
             let gameOverScene = SKScene(fileNamed: "GameOverScene")!
             gameOverScene.scaleMode = .fill
             self.view?.presentScene(gameOverScene, transition: gameOverTransition);
+            
+            //Ivalidate the timer
             timer.invalidate()
         }
     }

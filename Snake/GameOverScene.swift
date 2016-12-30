@@ -17,4 +17,12 @@ class GameOverScene: SKScene {
         gameScene.scaleMode = .fill
         self.view?.presentScene(gameScene, transition: gameOverTransition);
     }
+    
+    override func didMove(to view: SKView) {
+        //Populate High Score Label
+        let highScoreLabel = self.childNode(withName: "HighScoreLabel") as! SKLabelNode
+        let userDefaults = UserDefaults.standard
+        let currentHighScore = userDefaults.integer(forKey: "HighScore")
+        highScoreLabel.text = "High Score: \(currentHighScore)"
+    }
 }

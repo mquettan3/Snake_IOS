@@ -11,7 +11,6 @@ import GameplayKit
 class MainMenuScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Touch Happened")
         if let location = touches.first?.location(in: self) {
             let nodeArray = self.nodes(at: location)
             for node in nodeArray {
@@ -22,16 +21,15 @@ class MainMenuScene: SKScene {
                     gameScene.scaleMode = .fill
                     self.view?.presentScene(gameScene, transition: startGameTransition);
                 }
-                
-                //If Leaderboards Button is Pressed
-                if (node.name == "LeaderboardButton") {
-                    let startGameTransition = SKTransition.fade(withDuration: 0.5)
-                    let gameScene = SKScene(fileNamed: "GameScene")!
-                    gameScene.scaleMode = .fill
-                    self.view?.presentScene(gameScene, transition: startGameTransition);
-                }
-                
             }
         }
+    }
+    
+    override func didMove(to view: SKView) {
+        //Populate High Score Label
+        let highScoreLabel = self.childNode(withName: "HighScoreLabel") as! SKLabelNode
+        let userDefaults = UserDefaults.standard
+        let currentHighScore = userDefaults.integer(forKey: "HighScore")
+        highScoreLabel.text = "High Score: \(currentHighScore)"
     }
 }

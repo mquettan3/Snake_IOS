@@ -29,7 +29,7 @@ class SnakeLogic {
     var didEatFood: Bool
     var foodLocation: CGPoint
     private var worldSize: CGSize
-    private var currentScore: Int
+    var currentScore: Int
     
     init(worldSize: CGSize, snakeSize: CGSize, initialLength: Int) {
         self.worldSize = worldSize
