@@ -28,7 +28,8 @@ class GameScene: SKScene {
     //Configuration Parameters
     private var snakeScale = 30
     private var snakeInitialLength = 10
-    private var food = SKSpriteNode(imageNamed: "apple")
+    private var foodTypeArray : [String] = ["banana", "black-berry-dark", "black-berry-dark", "black-berry-light", "black-cherry", "coconut", "green-apple", "green-grape", "lemon", "lime", "orange", "peach", "pear", "plum", "raspberry", "red-apple", "red-cherry", "red-grape", "star-fruit", "strawberry", "watermelon"]
+    private var food = SKSpriteNode(imageNamed: "red-apple")
     
     override func didMove(to view: SKView) {
         //Init Snake Logic Class
@@ -104,8 +105,14 @@ class GameScene: SKScene {
         
         //Handle the case where we're eating food for this update
         if(snakeLogic!.didEatFood) {
+            //Create a random image for the food
+            self.food.texture = SKTexture(imageNamed: foodTypeArray[Int(arc4random_uniform(UInt32(foodTypeArray.count)))])
+            
+            //Random location for the food
             snakeLogic!.generateFood()
             food.position = snakeLogic!.foodLocation
+            
+            //Increase the size of the visual snake
             snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
             snakeLogic!.didEatFood = false
             score = snakeLogic!.updateScore()
