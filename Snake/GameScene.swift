@@ -19,9 +19,11 @@ class GameScene: SKScene {
     private var timer : Timer!
     private var runCount : Int = 0
     private var scoreLabel: SKLabelNode!
+    private var scoreLabelShadow: SKLabelNode!
     private var score : Int = 0 {
         didSet {
             self.scoreLabel.text = "Score: \(score)"
+            self.scoreLabelShadow.text = "Score: \(score)"
         }
     }
     
@@ -67,6 +69,7 @@ class GameScene: SKScene {
         
         //Populate Score Label
         scoreLabel = self.childNode(withName: "CurrentScoreLabel") as! SKLabelNode
+        scoreLabelShadow = self.childNode(withName: "CurrentScoreLabelShadow") as! SKLabelNode
         
         //Start Game Loop Timer
         //self.timer = timer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "timerMethod:", userInfo: nil, repeats: true)
@@ -111,6 +114,7 @@ class GameScene: SKScene {
             //Random location for the food
             snakeLogic!.generateFood()
             food.position = snakeLogic!.foodLocation
+            food.zPosition = 3
             
             //Increase the size of the visual snake
             snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
@@ -122,6 +126,7 @@ class GameScene: SKScene {
         var i: Int = 0
         for segment in snakeSegments {
             segment.position = snakeLogic!.points[i]
+            segment.zPosition = 3
             i += 1
             segment.removeFromParent()
             self.addChild(segment)
