@@ -31,7 +31,7 @@ class GameScene: SKScene {
     //Configuration Parameters
     private var snakeScale = 30
     private var snakeInitialLength = 10
-    private var foodTypeArray : [String] = ["banana", "black-berry-dark", "black-berry-light", "black-cherry", "coconut", "green-apple", "green-grape", "lemon", "lime", "orange", "peach", "pear", "plum", "raspberry", "red-apple", "red-cherry", "red-grape", "star-fruit", "strawberry", "watermelon"]
+    private var foodTypeArray : [String] = ["banana", "black-berry-light", "black-cherry", "coconut", "green-apple", "green-grape", "lemon", "lime", "orange", "peach", "pear", "plum", "raspberry", "red-apple", "red-cherry", "red-grape", "star-fruit", "strawberry", "watermelon"]
     private var food = SKSpriteNode(imageNamed: "red-apple")
     
     override func didMove(to view: SKView) {
