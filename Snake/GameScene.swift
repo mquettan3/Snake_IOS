@@ -31,7 +31,7 @@ class GameScene: SKScene {
     //Configuration Parameters
     private var snakeScale = 30
     private var snakeInitialLength = 10
-    private var foodTypeArray : [String] = ["banana", "black-berry-dark", "black-berry-dark", "black-berry-light", "black-cherry", "coconut", "green-apple", "green-grape", "lemon", "lime", "orange", "peach", "pear", "plum", "raspberry", "red-apple", "red-cherry", "red-grape", "star-fruit", "strawberry", "watermelon"]
+    private var foodTypeArray : [String] = ["banana", "black-berry-dark", "black-berry-light", "black-cherry", "coconut", "green-apple", "green-grape", "lemon", "lime", "orange", "peach", "pear", "plum", "raspberry", "red-apple", "red-cherry", "red-grape", "star-fruit", "strawberry", "watermelon"]
     private var food = SKSpriteNode(imageNamed: "red-apple")
     
     override func didMove(to view: SKView) {
@@ -122,12 +122,6 @@ class GameScene: SKScene {
             //Move Every Update
             snakeLogic!.move()
             
-            //Handle the case where we're eating a flare for this update
-            if(snakeLogic!.points[0] == flare.position && !flare.isHidden) {
-                score = snakeLogic!.updateScore(FoodTypes.Flare)
-                flare.isHidden = true
-            }
-            
             //Handle the case where we're eating food for this update
             if(snakeLogic!.didEatFood) {
                 //Create a random image for the food
@@ -141,6 +135,12 @@ class GameScene: SKScene {
                 snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
                 snakeLogic!.didEatFood = false
                 score = snakeLogic!.updateScore(FoodTypes.Fruit)
+            }
+            
+            //Handle the case where we're eating a flare for this update
+            if(snakeLogic!.points[0] == flare.position && !flare.isHidden) {
+                score = snakeLogic!.updateScore(FoodTypes.Flare)
+                flare.isHidden = true
             }
             
             //Update the snake drawing for each point in snake
@@ -235,6 +235,7 @@ class GameScene: SKScene {
                     
                     //Hide the pause menu
                     pauseMenu.run(hideAction!)
+                    pauseMenuShadow.run(hideAction!)
                 }
             }
         }
