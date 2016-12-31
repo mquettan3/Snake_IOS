@@ -22,12 +22,18 @@ enum Difficulty: Double {
     case Hard = 0.0625
 }
 
+enum FoodTypes {
+    case Flare
+    case Fruit
+}
+
 class SnakeLogic {
     var points: [CGPoint]
     var snakeSize: CGSize
     var currentDirection: Direction
     var didEatFood: Bool
     var foodLocation: CGPoint
+    var flareLocation: CGPoint
     private var worldSize: CGSize
     var currentScore: Int
     
@@ -35,6 +41,7 @@ class SnakeLogic {
         self.worldSize = worldSize
         self.snakeSize = snakeSize
         self.foodLocation = CGPoint(x: 0, y: 0)
+        self.flareLocation = CGPoint(x: 0, y: 0)
         self.didEatFood = false
         self.points = []
         self.currentDirection = .Up
@@ -117,6 +124,20 @@ class SnakeLogic {
         }
     }
     
+    func generateFlare() {
+        let cols = UInt32(floor(self.worldSize.width / self.snakeSize.width))
+        let rows = UInt32(floor(self.worldSize.height / self.snakeSize.height))
+        
+        self.flareLocation.x = CGFloat(UInt32(self.snakeSize.width) * arc4random_uniform(cols)) - (CGFloat(cols / 2) * self.snakeSize.width)
+        self.flareLocation.y = CGFloat(UInt32(self.snakeSize.height) * arc4random_uniform(rows - 1)) - (CGFloat(rows / 2) * self.snakeSize.height - self.snakeSize.height)
+        
+        for point in points {
+            if(point == self.flareLocation) {
+                self.generateFlare()
+            }
+        }
+    }
+    
     func didGameEnd() -> Bool {
         //If the head touches any of the body
         var count = 0
@@ -129,8 +150,13 @@ class SnakeLogic {
         return false
     }
     
-    func updateScore() -> Int {
-        self.currentScore += 30
+    func updateScore(_ foodType: FoodTypes) -> Int {
+        switch(foodType) {
+        case .Fruit:
+            self.currentScore += 30
+        case .Flare:
+            self.currentScore += 100
+        }
         return self.currentScore
     }
     

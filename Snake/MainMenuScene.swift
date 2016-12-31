@@ -8,6 +8,8 @@
 import SpriteKit
 import GameplayKit
 
+var currentDifficulty = Difficulty.Hard
+
 class MainMenuScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
