@@ -174,13 +174,15 @@ class GameScene: SKScene {
     }
     
     @objc private func flareTimerMethod() {
-        //Show the flare1
-        snakeLogic!.generateFlare()
-        flare.position = snakeLogic!.flareLocation
-        flare.run(SKAction(named: "Unhide")!)
-        
-        //Hide flare X seconds later
-        flare.run(SKAction(named: "HideFlare")!)
+        if(!isGamePaused) {
+            //Show the flare1
+            snakeLogic!.generateFlare()
+            flare.position = snakeLogic!.flareLocation
+            flare.run(SKAction(named: "Unhide")!)
+            
+            //Hide flare X seconds later
+            flare.run(SKAction(named: "HideFlare")!)
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
