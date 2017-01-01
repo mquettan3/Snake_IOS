@@ -28,14 +28,18 @@ enum FoodTypes {
 }
 
 class SnakeLogic {
+    //Public Variables
     var points: [CGPoint]
     var snakeSize: CGSize
-    var currentDirection: Direction
     var didEatFood: Bool
     var foodLocation: CGPoint
     var flareLocation: CGPoint
-    private var worldSize: CGSize
     var currentScore: Int
+    
+    //Private Variables
+    private var previousMovedDirection: Direction?
+    private var worldSize: CGSize
+    private var currentDirection: Direction
     
     init(worldSize: CGSize, snakeSize: CGSize, initialLength: Int) {
         self.worldSize = worldSize
@@ -47,13 +51,38 @@ class SnakeLogic {
         self.currentDirection = .Up
         self.currentScore = 0
         
+        
         for index in 0..<initialLength {
             self.points.append(CGPoint(x: snakeSize.width * CGFloat(index), y: 0))
         }
     }
     
-    func move(_ direction: Direction) {
-        switch direction {
+    func changeDirection(_ direction: Direction) {
+        if let previousMovedDirection = self.previousMovedDirection {
+            switch(direction) {
+            case .Left:
+                if(previousMovedDirection != .Right) {
+                    self.currentDirection = direction
+                }
+            case .Right:
+                if(previousMovedDirection != .Left) {
+                    self.currentDirection = direction
+                }
+            case .Down:
+                if(previousMovedDirection != .Up) {
+                    self.currentDirection = direction
+                }
+            case .Up:
+                if(previousMovedDirection != .Down) {
+                    self.currentDirection = direction
+                }
+            }
+        }
+    }
+    
+    func move() {
+        previousMovedDirection = currentDirection
+        switch currentDirection {
         case .Left:
             //New Head position is one width left of the current position.
             self.points.insert(CGPoint(x: (self.points[0].x - self.snakeSize.width), y: self.points[0].y), at: 0)
@@ -80,11 +109,7 @@ class SnakeLogic {
         }
     }
     
-    func move() {
-        self.move(currentDirection)
-    }
-    
-    func wrapEdges() {
+    private func wrapEdges() {
         let cols = UInt32(floor(self.worldSize.width / self.snakeSize.width))
         let rows = UInt32(floor(self.worldSize.height / self.snakeSize.height))
         let maxWidth = CGFloat(cols) * self.snakeSize.width

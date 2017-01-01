@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameScene: SKScene {
     
@@ -27,6 +28,12 @@ class GameScene: SKScene {
             self.scoreLabelShadow.text = "Score: \(score)"
         }
     }
+    
+    //Audio Players
+    var musicPlayer : AVAudioPlayer?
+    var foodSoundPlayer : AVAudioPlayer?
+    var deathSoundPlayer : AVAudioPlayer?
+    var flareSoundPlayer : AVAudioPlayer?
     
     //Configuration Parameters
     private var snakeScale = 30
@@ -89,28 +96,23 @@ class GameScene: SKScene {
         
         //Begin Flare Spawn Timer
         self.flareTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.flareTimerMethod), userInfo: nil, repeats: true)
+        
+        //Play Music
+        playMusic()
     }
     
     @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                if(snakeLogic!.currentDirection != .Left) {
-                    snakeLogic!.currentDirection = .Right
-                }
-            case UISwipeGestureRecognizerDirection.down:
-                if(snakeLogic!.currentDirection != .Up) {
-                    snakeLogic!.currentDirection = .Down
-                }
-            case UISwipeGestureRecognizerDirection.left:
-                if(snakeLogic!.currentDirection != .Right) {
-                    snakeLogic!.currentDirection = .Left
-                }
             case UISwipeGestureRecognizerDirection.up:
-                if(snakeLogic!.currentDirection != .Down) {
-                    snakeLogic!.currentDirection = .Up
-                }
+                snakeLogic!.changeDirection(.Up)
+            case UISwipeGestureRecognizerDirection.down:
+                snakeLogic!.changeDirection(.Down)
+            case UISwipeGestureRecognizerDirection.left:
+                snakeLogic!.changeDirection(.Left)
+            case UISwipeGestureRecognizerDirection.right:
+                snakeLogic!.changeDirection(.Right)
             default:
                 break
             }
@@ -135,12 +137,18 @@ class GameScene: SKScene {
                 snakeSegments.append(SKShapeNode(rectOf: snakeLogic!.snakeSize))
                 snakeLogic!.didEatFood = false
                 score = snakeLogic!.updateScore(FoodTypes.Fruit)
+                
+                //Play Food Sound
+                playFoodSound()
             }
             
             //Handle the case where we're eating a flare for this update
             if(snakeLogic!.points[0] == flare.position && !flare.isHidden) {
                 score = snakeLogic!.updateScore(FoodTypes.Flare)
                 flare.isHidden = true
+                
+                //Play Flare Sound
+                playFlareSound()
             }
             
             //Update the snake drawing for each point in snake
@@ -166,6 +174,12 @@ class GameScene: SKScene {
                 let gameOverScene = SKScene(fileNamed: "GameOverScene")!
                 gameOverScene.scaleMode = .fill
                 self.view?.presentScene(gameOverScene, transition: gameOverTransition);
+                
+                //Stop Music
+                musicPlayer!.stop()
+                
+                //Play Death Sound
+                playDeathSound()
                 
                 //Ivalidate the timer
                 timer.invalidate()
@@ -209,12 +223,18 @@ class GameScene: SKScene {
                         //Resume the game
                         isGamePaused = false
                         
+                        //Resume the music
+                        musicPlayer!.play()
+                        
                         //Hide Pause Menu
                         pauseMenu.run(hideAction!)
                         pauseMenuShadow.run(hideAction!)
                     } else {
                         //Pause the game
                         isGamePaused = true
+                        
+                        //Pause the Music
+                        musicPlayer!.pause()
                         
                         //Show the pause menu
                         pauseMenu.run(unhideAction!)
@@ -223,6 +243,9 @@ class GameScene: SKScene {
                 } else if (node.name == "YesButton") {
                     //Pause the Game
                     isGamePaused = true
+                    
+                    //Stop Music
+                    musicPlayer!.stop()
                     
                     //Present the Main Menu Scene
                     let mainMenuTransition = SKTransition.fade(withDuration: 2)
@@ -233,6 +256,9 @@ class GameScene: SKScene {
                     //Resume the game
                     isGamePaused = false
                     
+                    //Resume the music
+                    musicPlayer!.play()
+                    
                     //Hide the pause menu
                     pauseMenu.run(hideAction!)
                     pauseMenuShadow.run(hideAction!)
@@ -240,4 +266,80 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    private func playMusic() {
+        guard let sound = NSDataAsset(name: "me-and-my-guitar") else {
+            print("asset not found")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            musicPlayer = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            
+            musicPlayer!.numberOfLoops = -1
+            musicPlayer!.volume = 0.5
+            musicPlayer!.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func playFoodSound() {
+        guard let sound = NSDataAsset(name: "food-sound") else {
+            print("asset not found")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            foodSoundPlayer = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            
+            foodSoundPlayer!.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func playFlareSound() {
+        guard let sound = NSDataAsset(name: "flare-sound") else {
+            print("asset not found")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            flareSoundPlayer = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            
+            flareSoundPlayer!.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func playDeathSound() {
+        guard let sound = NSDataAsset(name: "death-sound") else {
+            print("asset not found")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            deathSoundPlayer = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            
+            deathSoundPlayer!.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    
 }
