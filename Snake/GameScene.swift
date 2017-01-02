@@ -12,6 +12,9 @@ import AVFoundation
 
 class GameScene: SKScene {
     
+    //Public Variables
+    var isGamePaused: Bool = false
+    
     //High scope variables
     private var snakeLogic: SnakeLogic?
     private var snakeSegments: [SKShapeNode] = []
@@ -20,7 +23,6 @@ class GameScene: SKScene {
     private var runCount : Int = 0
     private var scoreLabel: SKLabelNode!
     private var scoreLabelShadow: SKLabelNode!
-    private var isGamePaused: Bool = false
     private var flare = SKSpriteNode(imageNamed: "1")
     private var score : Int = 0 {
         didSet {
@@ -31,9 +33,9 @@ class GameScene: SKScene {
     
     //Audio Players
     var musicPlayer : AVAudioPlayer?
-    var foodSoundPlayer : AVAudioPlayer?
-    var deathSoundPlayer : AVAudioPlayer?
-    var flareSoundPlayer : AVAudioPlayer?
+    private var foodSoundPlayer : AVAudioPlayer?
+    private var deathSoundPlayer : AVAudioPlayer?
+    private var flareSoundPlayer : AVAudioPlayer?
     
     //Configuration Parameters
     private var snakeScale = 30
@@ -99,6 +101,9 @@ class GameScene: SKScene {
         
         //Play Music
         playMusic()
+        
+        //Do not run minimize action if game scene was not presented yet.
+        didGameMinimize = false
     }
     
     @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -204,7 +209,42 @@ class GameScene: SKScene {
         
         //Everything is done in the timerMethod
         
+        if(didGameMinimize) {
+            //Pause the game
+            isGamePaused = true
+            
+            //Pause the Music
+            musicPlayer!.pause()
+            
+            //Show the pause menu
+            self.unhidePauseMenu()
+            
+            //Only run this once per time the game is minimized.
+            didGameMinimize = false
+        }
         
+    }
+    
+    func unhidePauseMenu() {
+        //Load Nodes
+        let pauseMenu = self.childNode(withName: "GamePausedLabel") as! SKLabelNode
+        let pauseMenuShadow = self.childNode(withName: "GamePausedLabelShadow") as! SKLabelNode
+        let unhideAction = SKAction(named: "Unhide")
+        
+        //Run Unhide Action
+        pauseMenu.run(unhideAction!)
+        pauseMenuShadow.run(unhideAction!)
+    }
+    
+    func hidePauseMenu() {
+        //Load Nodes
+        let pauseMenu = self.childNode(withName: "GamePausedLabel") as! SKLabelNode
+        let pauseMenuShadow = self.childNode(withName: "GamePausedLabelShadow") as! SKLabelNode
+        let hideAction = SKAction(named: "Hide")
+        
+        //Run Hide Action
+        pauseMenu.run(hideAction!)
+        pauseMenuShadow.run(hideAction!)
         
     }
     
@@ -213,10 +253,6 @@ class GameScene: SKScene {
         if let location = touches.first?.location(in: self) {
             let nodeArray = self.nodes(at: location)
             for node in nodeArray {
-                let pauseMenu = self.childNode(withName: "GamePausedLabel") as! SKLabelNode
-                let pauseMenuShadow = self.childNode(withName: "GamePausedLabelShadow") as! SKLabelNode
-                let unhideAction = SKAction(named: "Unhide")
-                let hideAction = SKAction(named: "Hide")
                 //If Start Button is Pressed
                 if (node.name == "PauseButton") {
                     if(isGamePaused) {
@@ -227,8 +263,7 @@ class GameScene: SKScene {
                         musicPlayer!.play()
                         
                         //Hide Pause Menu
-                        pauseMenu.run(hideAction!)
-                        pauseMenuShadow.run(hideAction!)
+                        self.hidePauseMenu()
                     } else {
                         //Pause the game
                         isGamePaused = true
@@ -237,8 +272,7 @@ class GameScene: SKScene {
                         musicPlayer!.pause()
                         
                         //Show the pause menu
-                        pauseMenu.run(unhideAction!)
-                        pauseMenuShadow.run(unhideAction!)
+                        self.unhidePauseMenu()
                     }
                 } else if (node.name == "YesButton") {
                     //Pause the Game
@@ -260,8 +294,7 @@ class GameScene: SKScene {
                     musicPlayer!.play()
                     
                     //Hide the pause menu
-                    pauseMenu.run(hideAction!)
-                    pauseMenuShadow.run(hideAction!)
+                    self.hidePauseMenu()
                 }
             }
         }
@@ -340,6 +373,4 @@ class GameScene: SKScene {
             print("error: \(error.localizedDescription)")
         }
     }
-    
-    
 }

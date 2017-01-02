@@ -9,6 +9,7 @@ import SpriteKit
 import GameplayKit
 
 var currentDifficulty = Difficulty.Easy
+var gameScene: SKScene?
 
 class MainMenuScene: SKScene {
 
@@ -19,9 +20,9 @@ class MainMenuScene: SKScene {
                 //If Start Button is Pressed
                 if (node.name == "StartButton") {
                     let startGameTransition = SKTransition.fade(withDuration: 0.5)
-                    let gameScene = SKScene(fileNamed: "GameScene")!
-                    gameScene.scaleMode = .fill
-                    self.view?.presentScene(gameScene, transition: startGameTransition);
+                    gameScene = SKScene(fileNamed: "GameScene")!
+                    gameScene!.scaleMode = .fill
+                    self.view?.presentScene(gameScene!, transition: startGameTransition);
                 }
                 
                 //If Difficulty Button is Pressed
