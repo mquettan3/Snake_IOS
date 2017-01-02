@@ -13,6 +13,8 @@
 		23BA1D471E1342E000884F37 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23BA1D461E1342E000884F37 /* MainMenuScene.sks */; };
 		23BA1D491E13430A00884F37 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BA1D481E13430A00884F37 /* MainMenuScene.swift */; };
 		23BA1D4B1E18065700884F37 /* Flare.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 23BA1D4A1E18065700884F37 /* Flare.atlas */; };
+		23C913241E1AEC5C00961CED /* HowToPlayScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23C913231E1AEC5C00961CED /* HowToPlayScene.sks */; };
+		23C913261E1AEC7200961CED /* HowToPlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C913251E1AEC7200961CED /* HowToPlayScene.swift */; };
 		23FD38241E060A4F00FC6FEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD38231E060A4F00FC6FEF /* AppDelegate.swift */; };
 		23FD38261E060A4F00FC6FEF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23FD38251E060A4F00FC6FEF /* GameScene.sks */; };
 		23FD38281E060A4F00FC6FEF /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23FD38271E060A4F00FC6FEF /* Actions.sks */; };
@@ -49,6 +51,8 @@
 		23BA1D461E1342E000884F37 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		23BA1D481E13430A00884F37 /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		23BA1D4A1E18065700884F37 /* Flare.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Flare.atlas; sourceTree = "<group>"; };
+		23C913231E1AEC5C00961CED /* HowToPlayScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HowToPlayScene.sks; sourceTree = "<group>"; };
+		23C913251E1AEC7200961CED /* HowToPlayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToPlayScene.swift; sourceTree = "<group>"; };
 		23FD38201E060A4F00FC6FEF /* Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD38231E060A4F00FC6FEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23FD38251E060A4F00FC6FEF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 				23BA1D411E131C2900884F37 /* GameOverScene.sks */,
 				23BA1D461E1342E000884F37 /* MainMenuScene.sks */,
 				23BA1D481E13430A00884F37 /* MainMenuScene.swift */,
+				23C913231E1AEC5C00961CED /* HowToPlayScene.sks */,
+				23C913251E1AEC7200961CED /* HowToPlayScene.swift */,
 			);
 			path = Snake;
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 				23FD382F1E060A4F00FC6FEF /* Main.storyboard in Resources */,
 				23BA1D471E1342E000884F37 /* MainMenuScene.sks in Resources */,
 				23FD38261E060A4F00FC6FEF /* GameScene.sks in Resources */,
+				23C913241E1AEC5C00961CED /* HowToPlayScene.sks in Resources */,
 				23FD38311E060A4F00FC6FEF /* Assets.xcassets in Resources */,
 				23FD38341E060A4F00FC6FEF /* LaunchScreen.storyboard in Resources */,
 				23BA1D421E131C2900884F37 /* GameOverScene.sks in Resources */,
@@ -300,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23C913261E1AEC7200961CED /* HowToPlayScene.swift in Sources */,
 				23BA1D491E13430A00884F37 /* MainMenuScene.swift in Sources */,
 				23BA1D441E13266500884F37 /* GameOverScene.swift in Sources */,
 				23B9C4CC1E08C5B8008000C5 /* SnakeLogic.swift in Sources */,

@@ -8,7 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-var currentDifficulty = Difficulty.Hard
+var currentDifficulty = Difficulty.Easy
 
 class MainMenuScene: SKScene {
 
@@ -26,23 +26,16 @@ class MainMenuScene: SKScene {
                 
                 //If Difficulty Button is Pressed
                 if (node.name == "DifficultyButton") {
-                    let difficultyLabel = self.childNode(withName: "DifficultyLabel") as! SKLabelNode
-                    switch(difficultyLabel.text!) {
-                    case "Difficulty: Easy":
-                        //Set difficulty to Medium
-                        difficultyLabel.text = "Difficulty: Medium"
-                        currentDifficulty = Difficulty.Medium
-                    case "Difficulty: Medium":
-                        //Set difficulty to Hard
-                        difficultyLabel.text = "Difficulty: Hard"
-                        currentDifficulty = Difficulty.Hard
-                    case "Difficulty: Hard":
-                        //Set difficulty to Easy
-                        difficultyLabel.text = "Difficulty: Easy"
-                        currentDifficulty = Difficulty.Easy
-                    default:
-                        print("Undefined Difficulty - This should never happen")
-                    }
+                    self.setDifficulty()
+                }
+                
+                //If How to play node is Pressed
+                if (node.name == "HowToPlayLabel") {
+                    //Present the How to Play Scene
+                    let howToPlayTransition = SKTransition.fade(withDuration: 0.5)
+                    let howToPlayScene = SKScene(fileNamed: "HowToPlayScene")!
+                    howToPlayScene.scaleMode = .fill
+                    self.view?.presentScene(howToPlayScene, transition: howToPlayTransition);
                 }
             }
         }
@@ -54,5 +47,28 @@ class MainMenuScene: SKScene {
         let userDefaults = UserDefaults.standard
         let currentHighScore = userDefaults.integer(forKey: "HighScore")
         highScoreLabel.text = "High Score: \(currentHighScore)"
+        
+        //Set the difficulty
+        self.setDifficulty()
+    }
+    
+    func setDifficulty() {
+        let difficultyLabel = self.childNode(withName: "DifficultyLabel") as! SKLabelNode
+        switch(difficultyLabel.text!) {
+        case "Difficulty: Easy":
+            //Set difficulty to Medium
+            difficultyLabel.text = "Difficulty: Medium"
+            currentDifficulty = Difficulty.Medium
+        case "Difficulty: Medium":
+            //Set difficulty to Hard
+            difficultyLabel.text = "Difficulty: Hard"
+            currentDifficulty = Difficulty.Hard
+        case "Difficulty: Hard":
+            //Set difficulty to Easy
+            difficultyLabel.text = "Difficulty: Easy"
+            currentDifficulty = Difficulty.Easy
+        default:
+            print("Undefined Difficulty - This should never happen")
+        }
     }
 }
